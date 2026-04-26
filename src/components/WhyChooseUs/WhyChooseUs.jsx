@@ -23,7 +23,7 @@ const why = [
 
 function WhyChooseUs() {
   return (
-    <section className="why">
+    <section className="why" id="why-choose-us">
       <div className="why-container">
         <div className="why-header">
           <p className="why-eyebrow">Why Choose Us</p>
