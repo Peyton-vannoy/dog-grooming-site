@@ -1,16 +1,76 @@
-# React + Vite
+# Dog Grooming Site
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Marketing website for a dog grooming business, built with React and Vite.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Purpose**: A fast, modern, responsive site to showcase services and brand.
+- **Frontend**: React (JSX) + Vite.
+- **Styling**: CSS modules/files per component (see `src/components/`).
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React**: UI components
+- **Vite**: dev server + production build
+- **ESLint**: linting
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Prerequisites
+
+- **Node.js**: recommended current LTS
+- **npm**: comes with Node.js
+
+### Install
+
+```bash
+npm install
+```
+
+### Run locally
+
+```bash
+npm run dev
+```
+
+Vite will start the dev server and open the site in your browser.
+
+## Scripts
+
+- **Dev**: `npm run dev`
+- **Build**: `npm run build`
+- **Preview build**: `npm run preview`
+- **Lint**: `npm run lint`
+
+## Project Structure
+
+```text
+dog-grooming-site/
+  src/
+    assets/          # images, logos, icons
+    components/      # reusable UI components (each with JSX + CSS)
+    App.jsx          # app composition
+    main.jsx         # app entry
+  index.html
+  vite.config.js
+```
+
+## Deployment
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+Then deploy the generated `dist/` folder to your host (e.g., Netlify, Vercel, GitHub Pages, or any static hosting).
+
+## Customization
+
+- **Branding / images**: update files in `src/assets/`
+- **Site sections**: edit components in `src/components/`
+- **Global styles**: `src/App.css` (and component-level CSS files)
+
+## License
+
+This project is currently **unlicensed**. Add a license file if you plan to distribute or open-source it.
