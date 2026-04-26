@@ -3,7 +3,7 @@ import "./WhyChooseUs.css";
 const why = [
   {
     id: 1,
-    title: "We come to you",
+    title: "We Come to You",
     description:
       "No stressful car rides—our mobile service brings grooming right to your doorstep.",
   },
