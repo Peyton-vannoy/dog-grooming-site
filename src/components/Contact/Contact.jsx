@@ -10,11 +10,17 @@ function Contact() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errors, setIsErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     setIsSubmitted(false);
+
+    setIsErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
 
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -22,9 +28,39 @@ function Contact() {
     }));
   };
 
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!formData.email.includes("@")) {
+      newErrors.email = "Enter a valid email";
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = "Message is required";
+    } else if (formData.message.length < 10) {
+      newErrors.message = "Message must be at least 10 characters";
+    }
+
+    return newErrors;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const validationErrors = validateForm();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setIsErrors(validationErrors);
+      return;
+    }
+
+    setIsErrors({});
     setIsSubmitting(true);
 
     setTimeout(() => {
@@ -69,8 +105,8 @@ function Contact() {
                 placeholder="Name"
                 onChange={handleChange}
                 value={formData.name}
-                required
               />
+              {errors.name && <p className="error-message">{errors.name}</p>}
             </div>
             <div className="form-group">
               <label htmlFor="email">Email</label>
@@ -82,8 +118,8 @@ function Contact() {
                 placeholder="Email"
                 onChange={handleChange}
                 value={formData.email}
-                required
               />
+              {errors.email && <p className="error-message">{errors.email}</p>}
             </div>
             <div className="form-group">
               <label htmlFor="message">Message</label>
@@ -95,8 +131,10 @@ function Contact() {
                 rows="4"
                 onChange={handleChange}
                 value={formData.message}
-                required
               />
+              {errors.message && (
+                <p className="error-message">{errors.message}</p>
+              )}
             </div>
             <button
               type="submit"
