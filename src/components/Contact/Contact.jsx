@@ -1,6 +1,46 @@
+import { useState } from "react";
 import "./Contact.css";
 
 function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setIsSubmitted(false);
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setIsSubmitting(true);
+
+    setTimeout(() => {
+      console.log(formData);
+
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+      });
+    }, 1500);
+  };
+
   return (
     <section className="contact" id="contact">
       <div className="contact-container">
@@ -12,44 +52,61 @@ function Contact() {
           </p>
         </div>
 
-        <form action="" className="contact-form">
-          <div className="form-group">
-            <label htmlFor="name">Name</label>
-            <input
-              className="form-input"
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Name"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              className="form-input"
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Email"
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="message">Message</label>
-            <textarea
-              className="form-input"
-              id="message"
-              name="message"
-              placeholder="Tell us about your dog..."
-              rows="4"
-              required
-            />
-          </div>
-          <button type="submit" className="contact-button">
-            Request Booking
-          </button>
-        </form>
+        {isSubmitted ? (
+          <p className="success-message">
+            Thank you for your message! We will get back to you as soon as
+            possible.
+          </p>
+        ) : (
+          <form onSubmit={handleSubmit} className="contact-form">
+            <div className="form-group">
+              <label htmlFor="name">Name</label>
+              <input
+                className="form-input"
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Name"
+                onChange={handleChange}
+                value={formData.name}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                className="form-input"
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email"
+                onChange={handleChange}
+                value={formData.email}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="message">Message</label>
+              <textarea
+                name="message"
+                className="form-input"
+                id="message"
+                placeholder="Tell us about your dog..."
+                rows="4"
+                onChange={handleChange}
+                value={formData.message}
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="contact-button"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Request Booking"}
+            </button>
+          </form>
+        )}
       </div>
     </section>
   );

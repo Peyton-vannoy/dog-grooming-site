@@ -37,6 +37,14 @@
   margin: 0 auto;
 }
 
+.success-message {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #000;
+  text-align: center;
+  margin-top: 24px;
+}
+
 .contact-form {
   display: flex;
   flex-direction: column;
