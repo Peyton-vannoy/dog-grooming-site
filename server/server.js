@@ -23,13 +23,36 @@ app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
-app.post("/api/contact", (req, res) => {
-  console.log("Received data:", req.body);
+app.post("/api/contact", async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
 
-  res.status(200).json({
-    success: true,
-    message: "Form received successfully",
-  });
+    if (!name || !email || !message) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required",
+      });
+    }
+    const info = await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: process.env.EMAIL_TO,
+      subject: "New Booking Request",
+      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+    });
+
+    console.log("Email sent:", info.response);
+
+    res.status(200).json({
+      success: true,
+      message: "Form received successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to send email",
+      error: error.message,
+    });
+  }
 });
 
 app.listen(PORT, () => {
