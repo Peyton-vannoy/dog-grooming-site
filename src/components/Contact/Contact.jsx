@@ -10,14 +10,14 @@ function Contact() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [errors, setIsErrors] = useState({});
+  const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     setIsSubmitted(false);
 
-    setIsErrors((prev) => ({
+    setErrors((prev) => ({
       ...prev,
       [name]: "",
     }));
@@ -50,31 +50,45 @@ function Contact() {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const validationErrors = validateForm();
 
     if (Object.keys(validationErrors).length > 0) {
-      setIsErrors(validationErrors);
+      setErrors(validationErrors);
       return;
     }
 
-    setIsErrors({});
+    setErrors({});
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      console.log(formData);
-
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-
-      setFormData({
-        name: "",
-        email: "",
-        message: "",
+    try {
+      const response = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-    }, 1500);
+
+      const data = await response.json();
+      console.log(response);
+      console.log(data);
+
+      if (data.success) {
+        setIsSubmitted(true);
+      } else
+        setErrors({
+          form: "Something went wrong",
+        });
+    } catch (error) {
+      setErrors({
+        form: "Server error. Please try again later.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -136,6 +150,7 @@ function Contact() {
                 <p className="error-message">{errors.message}</p>
               )}
             </div>
+            {errors.form && <p>{errors.form}</p>}
             <button
               type="submit"
               className="contact-button"
