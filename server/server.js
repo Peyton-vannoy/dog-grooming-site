@@ -41,7 +41,7 @@ app.post("/api/contact", async (req, res) => {
       subject: "New Booking Request",
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
       html: `
-      <html style=" background-color: #ffffff;max-width: 300px; margin: 0 auto;">
+      <html style="background-color: #ffffff;max-width: 300px; margin: 0 auto;">
       <body>
       <div style="padding: 20px; font-family: Arial, sans-serif; background-color: #f5f5f5; border-radius: 10px; max-width: 300px; margin: 0 auto;">
       <h2 style="color: rgb(4, 158, 247);">New Booking Request</h2>
